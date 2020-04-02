@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>thymeleaf练习</title>
+</head>
+<body>
+    <h3>访问属性域</h3>
+    <p th:text="${requestAtt}">访问请求域数据方式一</p>
+    <p th:text="${#httpServletRequest.getAttribute('requestAtt')}">访问请求域数据方式二</p>
+    <br/>
+    <p th:text="${session.sessionAtt}">访问会话域数据</p>
+    <p th:text="${application.servletAtt}">访问应用域数据</p>
+    <br/>
+    <h3>获取contextPath值</h3>
+    <p th:text="@{/aa/bb}">@{}的作用就是获取contextPath值，加到指定地址前</p>
+    <a href="/thmeleaf/test" th:href="@{/thmeleaf/test}">使用场景</a>
+    <h3>直接使用表达式</h3>
+    <p>转义：[[${requestAtt}]]</p>
+    <p>不转义1：[(${requestAtt})]</p>
+
+    <h3>if判断</h3>
+    <p th:if="${not #strings.isEmpty(requestAtt)}">请求域数据不为空时输出</p>
+    ！<p th:if="${#strings.isEmpty(requestAtt)}">请求域数据为空时输出</p> ！
+
+    <h3>循环</h3>
+    <div >
+        <p th:each="s:${list}" th:text="${s}"></p>
+    </div>
+
+    <h3>包含页面片段</h3>
+    <p>::左边为文件路径</p>
+    <p>::右边为文件中片段名</p>
+    <div style="background-color: red" th:insert="~{include/part::part1}"><p>插入片段实例</p></div>
+    <div style="background-color: yellow" th:replace="~{include/part::part2}"><p>替换片段实例</p></div>
+    <div style="background-color: green" th:include="~{include/part::part3}"><P>包含片段实例</P></div>
+</body>
+</html>
